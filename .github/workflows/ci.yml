@@ -1,4 +1,4 @@
-name: ci 
+name: ci
 on:
   push:
     branches: [main]
@@ -12,10 +12,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm 
-      - runs: npm ci
-      - runs: npm test
+          cache: npm
+      - run: npm ci
+      - run: npm test
       - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v6
         with:
           context: .
           push: false
