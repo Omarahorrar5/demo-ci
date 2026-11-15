@@ -1,0 +1,22 @@
+name: ci 
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm 
+      - runs: npm ci
+      - runs: npm test
+      - uses: docker/setup-buildx-action@v3
+        with:
+          context: .
+          push: false
+          tags: demo:${{ github.sha }}
